@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section text-center mb-5">
+    <div class="hero-content">
+        <h1 class="display-4 mb-3">
+            <i class="fas fa-video text-primary me-3"></i>
+            YouTube Video İndirici
+        </h1>
+        <p class="lead text-muted">
+            YouTube videolarını kolayca indirin! Video veya sadece ses dosyası olarak.
+        </p>
+    </div>
+</div>
+
+<!-- URL Input Section -->
+<div class="row justify-content-center mb-4">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-link me-2"></i>
+                    Video URL'sini Girin
+                </h5>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">
+                        <i class="fab fa-youtube text-danger"></i>
+                    </span>
+                    <input type="url" class="form-control" id="video-url" 
+                           placeholder="https://www.youtube.com/watch?v=..." 
+                           aria-label="YouTube Video URL">
+                    <button class="btn btn-primary" type="button" id="get-info-btn">
+                        <i class="fas fa-search me-1"></i>
+                        Bilgi Al
+                    </button>
+                </div>
+                <div id="url-feedback" class="feedback-message"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Video Info Section -->
+<div class="row justify-content-center mb-4" id="video-info-section" style="display: none;">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Video Bilgileri
+                </h5>
+                <div id="video-info-content">
+                    <!-- Video bilgileri buraya gelecek -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Download Options Section -->
+<div class="row justify-content-center mb-4" id="download-options-section" style="display: none;">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-download me-2"></i>
+                    İndirme Seçenekleri
+                </h5>
+                
+                <!-- Download Type -->
+                <div class="mb-3">
+                    <label class="form-label">İndirme Türü:</label>
+                    <div class="btn-group d-flex" role="group">
+                        <input type="radio" class="btn-check" name="download-type" id="video-option" value="video" checked>
+                        <label class="btn btn-outline-primary flex-fill" for="video-option">
+                            <i class="fas fa-video me-1"></i>
+                            Video (MP4)
+                        </label>
+                        
+                        <input type="radio" class="btn-check" name="download-type" id="audio-option" value="audio">
+                        <label class="btn btn-outline-success flex-fill" for="audio-option">
+                            <i class="fas fa-music me-1"></i>
+                            Sadece Ses (MP3)
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Quality Selection -->
+                <div class="mb-3" id="quality-section">
+                    <label for="quality-select" class="form-label">Video Kalitesi:</label>
+                    <select class="form-select" id="quality-select">
+                        <option value="best">En İyi Kalite</option>
+                        <option value="720p">720p HD</option>
+                        <option value="480p">480p</option>
+                        <option value="360p">360p</option>
+                        <option value="worst">En Düşük Kalite</option>
+                    </select>
+                </div>
+                
+                <!-- Download Button -->
+                <div class="d-grid">
+                    <button class="btn btn-success btn-lg" id="download-btn">
+                        <i class="fas fa-download me-2"></i>
+                        İndir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Download Progress Section -->
+<div class="row justify-content-center mb-4" id="download-progress-section" style="display: none;">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-spinner fa-spin me-2"></i>
+                    İndirme Durumu
+                </h5>
+                <div class="progress mb-3">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                         id="download-progress" 
+                         role="progressbar" 
+                         style="width: 0%">
+                        0%
+                    </div>
+                </div>
+                <div id="download-status" class="text-center">
+                    İndirme başlatılıyor...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Downloads List Section -->
+<div class="row justify-content-center mb-4" id="downloads-list-section" style="display: none;">
+    <div class="col-lg-10">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-folder-open me-2"></i>
+                    İndirilen Dosyalar
+                </h5>
+                <div id="downloads-list">
+                    <!-- İndirilen dosyalar buraya gelecek -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mb-5">
+    <div class="col-md-4">
+        <div class="text-center">
+            <div class="feature-icon">
+                <i class="fas fa-video fa-3x text-primary mb-3"></i>
+            </div>
+            <h5>Video İndirme</h5>
+            <p class="text-muted">YouTube videolarını MP4 formatında yüksek kalitede indirin.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="text-center">
+            <div class="feature-icon">
+                <i class="fas fa-music fa-3x text-success mb-3"></i>
+            </div>
+            <h5>Ses İndirme</h5>
+            <p class="text-muted">Sadece ses dosyalarını MP3 formatında indirin.</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="text-center">
+            <div class="feature-icon">
+                <i class="fas fa-cog fa-3x text-warning mb-3"></i>
+            </div>
+            <h5>Kalite Seçimi</h5>
+            <p class="text-muted">İstediğiniz kaliteyi seçin ve optimize edin.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Important Notice -->
+<div class="alert alert-warning" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    <strong>Önemli:</strong> Bu uygulama sadece eğitim amaçlıdır. Telif hakkı korumalı içerikleri indirmeden önce gerekli izinleri aldığınızdan emin olun.
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// URL input event listener
+document.getElementById('video-url').addEventListener('input', function() {
+    const url = this.value.trim();
+    const feedback = document.getElementById('url-feedback');
+    
+    if (url) {
+        validateUrl(url);
+    } else {
+        feedback.innerHTML = '';
+        hideVideoInfo();
+    }
+});
+
+// Download type change event
+document.querySelectorAll('input[name="download-type"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const qualitySection = document.getElementById('quality-section');
+        if (this.value === 'audio') {
+            qualitySection.style.display = 'none';
+        } else {
+            qualitySection.style.display = 'block';
+        }
+    });
+});
+
+// Get info button click
+document.getElementById('get-info-btn').addEventListener('click', function() {
+    const url = document.getElementById('video-url').value.trim();
+    if (url) {
+        getVideoInfo(url);
+    }
+});
+
+// Download button click
+document.getElementById('download-btn').addEventListener('click', function() {
+    const url = document.getElementById('video-url').value.trim();
+    const downloadType = document.querySelector('input[name="download-type"]:checked').value;
+    const quality = document.getElementById('quality-select').value;
+    
+    if (url) {
+        startDownload(url, downloadType, quality);
+    }
+});
+
+// Load downloads on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadDownloads();
+});
+</script>
+{% endblock %} 
