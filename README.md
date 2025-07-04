@@ -282,4 +282,4 @@ Sorun yaşıyorsanız:
 
 ---
 
-🚀 **Hızlı Başlangıç**: `python app.py` komutu ile web arayüzünü başlatın ve `http://localhost:5000` adresini ziyaret edin! 
+🚀 **Hızlı Başlangıç**: `python app.py` komutu ile web arayüzünü başlatın ve `http://localhost:5000` adresini ziyaret edin! # youtube-indirici
